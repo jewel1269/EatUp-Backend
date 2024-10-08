@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const userRoutes = require("./Routes/User/user.js")
+const menumeal = require("./Routes/Eatup_Data/data.js")
+const Cart = require("./Routes/Cart/cart.js")
 
 // Load environment variables from .env
 dotenv.config();
@@ -33,6 +35,8 @@ mongoose.connect(uri, {
 
 // Routes
 app.use("/users", userRoutes);
+app.use("/menu", menumeal);
+app.use("/cart", Cart);
 
 app.get('/', (req, res) => {
   res.send('Hello, Eatup!');

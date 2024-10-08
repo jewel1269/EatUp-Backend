@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
 //user get with email
 router.get('/users', async (req, res) => {
     const email = req.query.email;
+    console.log(email);
   
     // Log the email to ensure you're receiving it
     console.log("Email query:", email);
@@ -47,19 +48,28 @@ router.get('/users', async (req, res) => {
     }
   });
 
-// Delete a user by ID
-router.delete('/delete/:id', async (req, res) => {
+
+ // Update or create user
+router.patch('/update/:id', async (req, res) => {
   const { id } = req.params;
+  const { name, phoneNumber, address, password } = req.body;
+  console.log(name, phoneNumber, address, password);
 
   try {
-    // Find and delete the user by ID
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found!' });
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id }, 
+      { name, phoneNumber, address, password },
+      { new: true, runValidators: true, upsert: true } 
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
     }
-    res.status(200).json({ message: 'User deleted successfully!' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete user' });
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
