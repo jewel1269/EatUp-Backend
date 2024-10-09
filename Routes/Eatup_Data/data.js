@@ -40,9 +40,11 @@ router.get("/popular", async (req, reply) => {
 // Get menu item by ID for Popular Data
 router.get("/popular/:id", async (req, res) => {
   const { id } = req.params;
+  console.log(id);
 
   try {
     const menuItem = await Popular.findById(id);  
+    console.log(menuItem, "mtch");
     if (!menuItem) {
       return res.status(404).json({ message: "Menu item not found" });
     }
