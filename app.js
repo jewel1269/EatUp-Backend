@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const userRoutes = require("./Routes/User/user.js")
 const menumeal = require("./Routes/Eatup_Data/data.js")
 const Cart = require("./Routes/Cart/cart.js")
+const Order = require("./Routes/Order/order.js")
 
 // Load environment variables from .env
 dotenv.config();
@@ -36,6 +37,7 @@ mongoose.connect(uri, {
 // Routes
 app.use("/users", userRoutes);
 app.use("/menu", menumeal);
+app.use("/order", Order);
 app.use("/cart", Cart);
 
 app.get('/', (req, res) => {

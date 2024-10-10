@@ -8,7 +8,9 @@ const PupolarDataSchema = new mongoose.Schema({
     rating: { type: Number, required: true },
     totalOrder: { type: Number, required: true },
     category: { type: String, required: true },
-    image: { type: String, required: true }
+    image: { type: String, required: true },
+    quantity: { type: Number, default: 1 } ,
+
 });
 
 const PupolarData = mongoose.model('PupolarData', PupolarDataSchema);
